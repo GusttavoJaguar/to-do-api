@@ -16,14 +16,13 @@ test:
   database: todo_api_test
 
 production:
-  dispatcher: true
-  worker: true
-  queues: "*"
-  connection: 
-    adapter: postgresql
-    url: <%= ENV['DATABASE_URL'] %>
-    encoding: unicode
-    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  adapter: postgresql  # OBRIGATÓRIO para ambas as gems
+  encoding: unicode
+  url: <%= ENV['DATABASE_URL'] %>
+  migrations_paths:
+    - db/migrate
+    - db/solid_cache_migrate  # Caminho específico para Solid Cache
+    - db/solid_queue_migrate  # Caminho específico para Solid Queue
 
 solid_queue:
   <<: *default  # Herda a mesma conexão do ambiente atual
