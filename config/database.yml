@@ -16,5 +16,9 @@ test:
   database: todo_api_test
 
 production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  dispatcher: true
+  worker: true
+  queues: "*"
+  connection: 
+    adapter: postgresql
+    url: <%= ENV['SOLID_QUEUE_DATABASE_URL'] %>
