@@ -1,15 +1,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>]
+  host: localhost
+  port: 5432
 
 development:
   <<: *default
   database: todo_api_development
   username: postgres
   password: 12358
-  host: localhost
-
 
 test:
   <<: *default
