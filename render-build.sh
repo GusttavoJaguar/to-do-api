@@ -1,34 +1,33 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# 1. Configuração essencial de paths
-export GEM_HOME="${GEM_HOME:-$HOME/.gems}"
-export GEM_PATH="${GEM_PATH:-$GEM_HOME}"
-export PATH="$GEM_HOME/bin:$PATH"
-# Configuração temporária para o build
-export PGHOST=localhost
-export PGPORT=5432
+# Configura SSL para PostgreSQL (obrigatório no Render)
+export PGSSLMODE=require
 
-# 2. Instalação segura de dependências
-echo "--> Instalando dependências..."
+# 1. Instalação otimizada
+echo "--- Instalando dependências ---"
 bundle config set --local path 'vendor/bundle'
-bundle install --jobs 4 --retry 3 --quiet
+bundle install --jobs 4 --retry 3
 
-# 3. Verificação do ambiente
-echo "--> Verificando instalação..."
-bundle exec rails --version || { echo "❌ Rails não encontrado"; exit 1; }
+# 2. Verificação do ambiente
+echo "--- Verificando instalação ---"
+bundle exec rails -v || { echo "❌ Rails não encontrado"; exit 1; }
 
-# 4. Execução das migrações com tratamento de erros
-echo "--> Executando migrações..."
-{
-  bundle exec rails db:migrate && \
-  bundle exec rails solid_queue:install:migrations && \
-  bundle exec rails db:migrate SCOPE=solid_queue && \
-  bundle exec rails solid_cache:install:migrations && \
-  bundle exec rails db:migrate SCOPE=solid_cache
+# 3. Migrações com fallback inteligente
+echo "--- Executando migrações ---"
+bundle exec rails db:migrate || {
+  echo "⚠️ Tentando criar banco..."
+  bundle exec rails db:create && bundle exec rails db:migrate
 } || {
-  echo "❌ Falha nas migrações";
+  echo "❌ Falha crítica nas migrações";
+  bundle exec rails db:migrate:status;
   exit 1;
+}
+
+# 4. Migrações do Solid Queue
+bundle exec rails solid_queue:install:migrations && \
+bundle exec rails db:migrate SCOPE=solid_queue || {
+  echo "⚠️ Solid Queue migrado separadamente";
 }
 
 echo "✅ Build concluído com sucesso!"

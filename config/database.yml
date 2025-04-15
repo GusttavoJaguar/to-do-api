@@ -16,13 +16,11 @@ test:
   database: todo_api_test
 
 production:
-  adapter: postgresql  # OBRIGATÓRIO para ambas as gems
+  adapter: postgresql
   encoding: unicode
   url: <%= ENV['DATABASE_URL'] %>
-  migrations_paths:
-    - db/migrate
-    - db/solid_cache_migrate  # Caminho específico para Solid Cache
-    - db/solid_queue_migrate  # Caminho específico para Solid Queue
+  sslmode: <%= ENV['PGSSLMODE'] || 'require' %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 solid_queue:
   <<: *default  # Herda a mesma conexão do ambiente atual
