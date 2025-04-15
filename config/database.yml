@@ -88,7 +88,8 @@ production:
     database: todo_api_production
     username: todo_api
     password: <%= ENV["TODO_API_DATABASE_PASSWORD"] %>
-    url: <%= ENV['DATABASE_URL'] %>
+    url: <%= ENV['DATABASE_URL'] %>]
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   cache:
     <<: *primary_production
     database: todo_api_production_cache
