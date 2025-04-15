@@ -20,6 +20,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cable"
 
 group :production do
+  gem 'rails', '~> 8.0.2'
   gem 'solid_queue', '~> 1.0', require: false 
   gem 'solid_cache', '~> 0.4', require: false
 end
