@@ -10,6 +10,11 @@ default: &default
 development:
   <<: *default
   database: todo_api_development
+  host: localhost
+  port: 5432
+  username: postgres
+  password: 12358
+  encoding: unicode
 
 test:
   <<: *default
@@ -17,8 +22,10 @@ test:
 
 production:
   adapter: postgresql
+  username: gusttavojaguar
+  password: V8XSlibPKB0ze2FNB6p5brsmFsxDwlYB
   encoding: unicode
-  url: <%= ENV['DATABASE_URL'] %>
+  url: postgresql://gusttavojaguar:V8XSlibPKB0ze2FNB6p5brsmFsxDwlYB@dpg-cvv8d4vgi27c73col1b0-a.oregon-postgres.render.com/todo_i57d
   sslmode: <%= ENV['PGSSLMODE'] || 'require' %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
