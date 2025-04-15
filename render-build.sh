@@ -5,6 +5,9 @@ set -eo pipefail
 export GEM_HOME="${GEM_HOME:-$HOME/.gems}"
 export GEM_PATH="${GEM_PATH:-$GEM_HOME}"
 export PATH="$GEM_HOME/bin:$PATH"
+# Configuração temporária para o build
+export PGHOST=localhost
+export PGPORT=5432
 
 # 2. Instalação segura de dependências
 echo "--> Instalando dependências..."
