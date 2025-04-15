@@ -1,20 +1,16 @@
 #!/usr/bin/env bash
 set -o errexit
 
-# Instala TODAS as gems (incluindo development/test)
+# 1. Instalação segura de gems
 bundle config set --local without ''
 bundle install
 
-# Configura SSL para PostgreSQL
+# 2. Configuração SSL para Render
 export PGSSLMODE=require
 
-# Migrações principais
+# 3. Fluxo de migração seguro
+bundle exec rails db:create
 bundle exec rails db:migrate
-
-# Migrações do Solid Cache
 bundle exec rails solid_cache:install:migrations
-bundle exec rails db:migrate
-
-# Migrações do Solid Queue
 bundle exec rails solid_queue:install:migrations
 bundle exec rails db:migrate
