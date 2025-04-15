@@ -22,3 +22,7 @@ production:
   connection: 
     adapter: postgresql
     url: <%= ENV['SOLID_QUEUE_DATABASE_URL'] %>
+
+solid_queue:
+  <<: *default  # Herda a mesma conexão do ambiente atual
+  migrations_paths: db/solid_queue_migrate
