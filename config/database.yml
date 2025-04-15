@@ -4,12 +4,12 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>]
   host: localhost
   port: 5432
+  username: postgres
+  password: 12358
 
 development:
   <<: *default
   database: todo_api_development
-  username: postgres
-  password: 12358
 
 test:
   <<: *default
@@ -21,7 +21,7 @@ production:
   queues: "*"
   connection: 
     adapter: postgresql
-    url: <%= ENV['SOLID_QUEUE_DATABASE_URL'] %>
+    url: <%= ENV['DATABASE_URL'] %>
 
 solid_queue:
   <<: *default  # Herda a mesma conexão do ambiente atual
