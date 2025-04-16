@@ -21,7 +21,6 @@ production:
   host: dpg-cvvgibbuibrs73beiljg-a
   username: production_bv03_user
   password: qJS2rlW0yjlJeFkCFXKymOMF6Gxcb23F
-  sslmode: require
 
 solid_queue:
   <<: *default  # Herda a mesma conexão do ambiente atual
