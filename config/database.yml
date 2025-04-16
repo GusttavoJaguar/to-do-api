@@ -17,11 +17,12 @@ test:
   database: todo_api_test
 
 production:
+  database: todo_i57d
   adapter: postgresql
   username: gusttavojaguar
   password: V8XSlibPKB0ze2FNB6p5brsmFsxDwlYB
   encoding: unicode
-  url: postgresql://gusttavojaguar:V8XSlibPKB0ze2FNB6p5brsmFsxDwlYB@dpg-cvv8d4vgi27c73col1b0-a.oregon-postgres.render.com/todo_i57d
+  url: postgresql://gusttavojaguar:V8XSlibPKB0ze2FNB6p5brsmFsxDwlYB@dpg-cvv8d4vgi27c73col1b0-a/todo_i57d
   sslmode: <%= ENV['PGSSLMODE'] || 'require' %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
