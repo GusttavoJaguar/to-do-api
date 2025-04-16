@@ -16,11 +16,14 @@ test:
   database: todo_api_test
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  url: <%= ENV['DATABASE_URL'] %>
-  sslmode: <%= ENV['PGSSLMODE'] || 'require' %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  dispatcher: true
+  worker: true
+  queues: "*"
+  connection: 
+    adapter: postgresql
+    url: <%= ENV['DATABASE_URL'] %>
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 solid_queue:
   <<: *default  # Herda a mesma conexão do ambiente atual
