@@ -15,7 +15,6 @@ bundle exec rails -v || { echo "❌ Rails não encontrado"; exit 1; }
 
 # Configura SSL simplificado
 export PGSSLMODE=require
-
 # 3. Migrações com fallback inteligente
 echo "--- Executando migrações ---"
 bundle exec rails db:migrate || {
