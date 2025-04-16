@@ -4,10 +4,6 @@ set -eo pipefail
 # Configura SSL para PostgreSQL (obrigatório no Render)
 export PGSSLMODE=require
 
-# Migrações com tratamento de erro
-bundle exec rails db:create || echo "Banco já existe"
-bundle exec rails db:migrate || exit 1
-
 # 1. Instalação otimizada
 echo "--- Instalando dependências ---"
 bundle config set --local path 'vendor/bundle'
